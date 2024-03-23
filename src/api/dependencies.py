@@ -1,13 +1,12 @@
 """This module contains the dependencies for the API REST."""
 import base64
-from multiprocessing import AuthenticationError
 import binascii
 from typing import Annotated
 
 from starlette import status
 
 from fastapi import Header, HTTPException
-from shell_executor_lib import CommandManager, CommandError
+from shell_executor_lib import CommandManager, CommandError, AuthenticationError
 
 
 async def auth_user(

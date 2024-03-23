@@ -60,7 +60,7 @@ nose2-html-report = "^0.6"
 pep8-naming = "^0.13"
 python-kacl = "^0.3"
 shell_executor_lib  = { git = "https://github.com/Lagatrix/shell_executor_lib.git", rev = "0.2.0" }
-groups_users_lib  = { git = "https://github.com/Lagatrix/groups_users_lib.git", rev = "0.1.1" }
+groups_users_lib  = { git = "https://github.com/Lagatrix/groups_users_lib.git", rev = "0.1.2" }
 
 [tool.poetry.group.dev]
 optional = true

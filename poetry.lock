@@ -570,7 +570,7 @@ test = ["black", "coverage[toml]", "ddt (>=1.1.1,!=1.4.3)", "mock", "mypy", "pre
 
 [[package]]
 name = "groups-users-lib"
-version = "0.1.1"
+version = "0.1.2"
 description = "This library manage unix users and groups asynchronously"
 optional = false
 python-versions = "^3.11"
@@ -580,8 +580,8 @@ develop = false
 [package.source]
 type = "git"
 url = "https://github.com/Lagatrix/groups_users_lib.git"
-reference = "0.1.1"
-resolved_reference = "4069f2da565dd0123399e9c702de12f529bcbc60"
+reference = "0.1.2"
+resolved_reference = "a1c1656c2f383d6094f25818ab956f6a769c839d"
 
 [[package]]
 name = "h11"
@@ -1769,13 +1769,13 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "uvicorn"
-version = "0.28.0"
+version = "0.28.1"
 description = "The lightning-fast ASGI server."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "uvicorn-0.28.0-py3-none-any.whl", hash = "sha256:6623abbbe6176204a4226e67607b4d52cc60ff62cda0ff177613645cefa2ece1"},
-    {file = "uvicorn-0.28.0.tar.gz", hash = "sha256:cab4473b5d1eaeb5a0f6375ac4bc85007ffc75c3cc1768816d9e5d589857b067"},
+    {file = "uvicorn-0.28.1-py3-none-any.whl", hash = "sha256:5162f6d652f545be91b1feeaee8180774af143965ca9dc8a47ff1dc6bafa4ad5"},
+    {file = "uvicorn-0.28.1.tar.gz", hash = "sha256:08103e79d546b6cf20f67c7e5e434d2cf500a6e29b28773e407250c54fc4fa3c"},
 ]
 
 [package.dependencies]
@@ -2007,4 +2007,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "ea97acf4115bbf05320b1a93a64617e20c21e857d6da26ff322a7496b2250c27"
+content-hash = "eebcc562c894af77fcf7a3ef1b100dc266b692dc929f68d538c37af368cbc1c6"
