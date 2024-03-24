@@ -7,5 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## Added
 - @javierfh03 - Develop user endpoint.
 - @javierfh03 - Develop group endpoint.
+- @javierfh03 - Develop crontab endpoint.
+- @javierfh03 - Develop storage endpoint.
+- @javierfh03 - Develop host endpoint.
 
 [Unreleased]: https://github.com/Lagatrix/lagatrix_api
