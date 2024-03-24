@@ -29,6 +29,9 @@ async def get_users(command_manager: Annotated[CommandManager, Security(auth_use
 
     Returns:
         The list of users.
+
+    Raises:
+        HTTP Error 500: If there is an error in the command manager.
     """
     try:
         return await UserManager(command_manager).get_users()

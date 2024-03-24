@@ -29,6 +29,9 @@ async def get_disks(command_manager: Annotated[CommandManager, Security(auth_use
 
     Returns:
         The list of disks.
+
+    Raises:
+        HTTP Error 500: If there is an error in the command manager.
     """
     try:
         return await DiskManager(command_manager).get_disks()
