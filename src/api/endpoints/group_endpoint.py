@@ -1,4 +1,4 @@
-"""This module contains the user endpoint for the API REST."""
+"""This module contains the group endpoint for the API REST."""
 from typing import Annotated
 
 from fastapi import HTTPException, APIRouter
@@ -252,7 +252,6 @@ async def remove_user_from_group(
 
 @group_router.delete(
     path="/{group_name}",
-    response_model=None,
     status_code=200
 )
 async def delete_group(

@@ -161,7 +161,6 @@ async def put_user(
 
 @user_router.delete(
     path="/{user}",
-    response_model=None,
     status_code=204,
 )
 async def delete_user(
