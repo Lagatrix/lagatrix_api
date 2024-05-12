@@ -10,5 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - @javierfh03 - Develop crontab endpoint.
 - @javierfh03 - Develop storage endpoint.
 - @javierfh03 - Develop host endpoint.
+- @javierfh03 - Develop login endpoint.
+## Changed
+- @javierfh03 - Change authentication to basic.
 
 [Unreleased]: https://github.com/Lagatrix/lagatrix_api

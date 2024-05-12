@@ -3,37 +3,35 @@ import base64
 import binascii
 from typing import Annotated
 
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from starlette import status
 
-from fastapi import Header, HTTPException
+from fastapi import Header, HTTPException, Depends
 from shell_executor_lib import CommandManager, CommandError, AuthenticationError
+
+security = HTTPBasic()
 
 
 async def auth_user(
-    username: Annotated[str | None, Header(convert_underscores=False)] = None,
-    password: Annotated[str | None, Header(convert_underscores=False)] = None
+    credentials: Annotated[HTTPBasicCredentials, Depends(security)]
 ) -> CommandManager:
     """Authenticate the user.
 
     Args:
-        username: Name of username.
-        password: Password of the user in base 64.
+        credentials: The credentials of the user.
 
     Returns:
         CommandManager: The command manager to execute commands.
 
     Raises:
-        HTTP Error 400: If the base 64 is not valid.
         HTTP Error 401: If the user is not authenticated.
         HTTP Error 500: If there is an error in the command manager.
     """
-    if username is None or password is None:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Required headers are missing.')
+    if credentials.username is None or credentials.password is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str("Invalid credentials"))
 
     try:
-        return await CommandManager.init(username, base64.b64decode(password).decode('utf-8'))
-    except binascii.Error as b64_error:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(b64_error))
+        return await CommandManager.init(credentials.username, credentials.password)
     except AuthenticationError as auth_error:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(auth_error))
     except CommandError as command_error:

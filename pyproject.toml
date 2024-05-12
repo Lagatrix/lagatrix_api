@@ -30,8 +30,16 @@ repository = "https://github.com/Lagatrix/lagatrix_api"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-fastapi = "^0.110.0"
 uvicorn = {extras = ["standard"], version = "^0.28.0"}
+shell_executor_lib  = { git = "https://github.com/Lagatrix/shell_executor_lib.git", rev = "0.2.0" }
+groups_users_lib  = { git = "https://github.com/Lagatrix/groups_users_lib.git", rev = "0.1.3" }
+crontab_lib  = { git = "https://github.com/Lagatrix/crontab_lib.git", rev = "0.1.1" }
+storage_lib  = { git = "https://github.com/Lagatrix/storage_lib.git", rev = "0.1.1" }
+host_lib  = { git = "https://github.com/Lagatrix/host_lib.git", rev = "0.1.0" }
+cpu_lib  = { git = "https://github.com/Lagatrix/cpu_lib.git", rev = "0.1.0" }
+gpu_lib  = { git = "https://github.com/Lagatrix/gpu_lib.git", rev = "0.1.0" }
+ram_lib  = { git = "https://github.com/Lagatrix/ram_lib.git", rev = "0.1.1" }
+fastapi = "^0.110.0"
 
 [tool.poetry.group.docs]
 optional = true
@@ -59,20 +67,14 @@ nose2 = "^0.12"
 nose2-html-report = "^0.6"
 pep8-naming = "^0.13"
 python-kacl = "^0.3"
-shell_executor_lib  = { git = "https://github.com/Lagatrix/shell_executor_lib.git", rev = "0.2.0" }
-groups_users_lib  = { git = "https://github.com/Lagatrix/groups_users_lib.git", rev = "0.1.2" }
-crontab_lib  = { git = "https://github.com/Lagatrix/crontab_lib.git", rev = "0.1.1" }
-storage_lib  = { git = "https://github.com/Lagatrix/storage_lib.git", rev = "0.1.1" }
-host_lib  = { git = "https://github.com/Lagatrix/host_lib.git", rev = "0.1.0" }
-cpu_lib  = { git = "https://github.com/Lagatrix/cpu_lib.git", rev = "0.1.0" }
-gpu_lib  = { git = "https://github.com/Lagatrix/gpu_lib.git", rev = "0.1.0" }
-ram_lib  = { git = "https://github.com/Lagatrix/ram_lib.git", rev = "0.1.1" }
 
 [tool.poetry.group.dev]
 optional = true
 [tool.poetry.group.dev.dependencies]
 poethepoet = "^0.18"
 
+[tool.poetry.scripts]
+lagatrix-worker = "lagatrix_api:main"
 
 [tool.poe.tasks]
 build = { script = "scripts.build:regenerate" }

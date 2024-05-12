@@ -1,0 +1,13 @@
+[Unit]
+Description=Lagatrix API Service
+
+[Service]
+RestartSec=1
+User=lagatrix
+WorkingDirectory=/opt/lagatrix-api
+ExecStart=/bin/bash /opt/lagatrix-api/executor.sh
+StandardOutput=file:/opt/lagatrix-api/log/lagatrix.log
+StandardError=file:/opt/lagatrix-api/log/error.log
+
+[Install]
+WantedBy=multi-user.target
