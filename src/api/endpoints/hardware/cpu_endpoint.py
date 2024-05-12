@@ -15,7 +15,7 @@ cpu_router = APIRouter(
 
 
 @cpu_router.get(
-    path="/",
+    path="",
     response_model=Cpu,
     response_description="Returns all the information of the CPU.",
     status_code=200

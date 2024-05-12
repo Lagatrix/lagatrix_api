@@ -16,7 +16,7 @@ host_router = APIRouter(
 
 
 @host_router.get(
-    path="/",
+    path="",
     response_model=Host,
     response_description="Returns host information.",
     status_code=200

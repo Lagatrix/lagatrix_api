@@ -3,7 +3,7 @@ from typing import Annotated
 
 from fastapi import HTTPException, APIRouter
 from fastapi.params import Security
-from groups_users_lib import User, UserManager, GroupNotExistError, UserExistError, UserNotExistError
+from groups_users_lib import User, UserManager, GroupNotExistError, UserExistError, UserNotExistError, UserInUseError
 from shell_executor_lib import CommandError, PrivilegesError, CommandManager
 from starlette import status
 
@@ -13,6 +13,23 @@ user_router = APIRouter(
     prefix="/user",
     tags=["Users"],
 )
+
+
+@user_router.get(
+    path="/login",
+    response_model=str,
+    status_code=200
+)
+async def make_login(command_manager: Annotated[CommandManager, Security(auth_user)]) -> str:
+    """Make login.
+
+    Args:
+        command_manager: The command manager to execute commands.
+
+    Returns:
+        The welcome message.
+    """
+    return f'Welcome {command_manager.user}!'
 
 
 @user_router.get(
@@ -105,10 +122,12 @@ async def post_user(
     try:
         await user_manager.add_user(user)
         return await user_manager.get_user(user.name)
-    except (ValueError, GroupNotExistError) as formats_error:
+    except ValueError as formats_error:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(formats_error))
     except PrivilegesError as privileges_error:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(privileges_error))
+    except GroupNotExistError as group_not_exist_error:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(group_not_exist_error))
     except UserExistError as user_exist_error:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(user_exist_error))
     except CommandError as command_error:
@@ -151,13 +170,17 @@ async def put_user(
 
     try:
         await user_manager.edit_user(user, user_changes, user_changes.password)
-        return await user_manager.get_user(user)
+        return await user_manager.get_user(user_changes.name if user_changes.name else user)
     except (ValueError, GroupNotExistError) as formats_error:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(formats_error))
     except PrivilegesError as privileges_error:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(privileges_error))
     except UserNotExistError as user_not_exist_error:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(user_not_exist_error))
+    except UserExistError as user_exist_error:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(user_exist_error))
+    except UserInUseError as user_in_use_error:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(user_in_use_error))
     except CommandError as command_error:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(command_error))
 
@@ -191,5 +214,7 @@ async def delete_user(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(user_not_exist_error))
     except PrivilegesError as privileges_error:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(privileges_error))
+    except UserInUseError as user_in_use_error:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(user_in_use_error))
     except CommandError as command_error:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(command_error))

@@ -4,7 +4,7 @@ from typing import Annotated
 from fastapi import HTTPException, APIRouter
 from fastapi.params import Security
 from groups_users_lib import GroupNotExistError, UserNotExistError, Group, \
-    GroupManager, GroupExistError
+    GroupManager, GroupExistError, GroupInUseError
 from shell_executor_lib import CommandError, PrivilegesError, CommandManager
 from starlette import status
 
@@ -95,7 +95,7 @@ async def post_group(
     group_manager: GroupManager = GroupManager(command_manager)
 
     if group is None or group.name is None:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="The group is required.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="The group name is required.")
 
     try:
         await group_manager.add_group(group)
@@ -150,6 +150,8 @@ async def put_group(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(privileges_error))
     except GroupNotExistError as group_not_exist_error:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(group_not_exist_error))
+    except UserNotExistError as user_not_exist_error:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(user_not_exist_error))
     except GroupExistError as group_exist_error:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(group_exist_error))
     except CommandError as command_error:
@@ -281,5 +283,7 @@ async def delete_group(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(privileges_error))
     except GroupNotExistError as group_not_exist_error:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(group_not_exist_error))
+    except GroupInUseError as group_in_use_error:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(group_in_use_error))
     except CommandError as command_error:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(command_error))

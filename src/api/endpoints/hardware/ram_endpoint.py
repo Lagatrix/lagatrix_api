@@ -15,7 +15,7 @@ ram_router = APIRouter(
 
 
 @ram_router.get(
-    path="/",
+    path="",
     response_model=list[RamModule],
     response_description="Returns the RAM information.",
     status_code=200

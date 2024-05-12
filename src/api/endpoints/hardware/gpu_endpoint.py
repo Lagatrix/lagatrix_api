@@ -15,7 +15,7 @@ gpu_router = APIRouter(
 
 
 @gpu_router.get(
-    path="/",
+    path="",
     response_model=Gpu,
     response_description="Returns all the information of the GPU.",
     status_code=200
