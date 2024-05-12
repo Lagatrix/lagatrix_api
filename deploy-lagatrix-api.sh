@@ -107,9 +107,7 @@ main() {
 
             install_python_components
 
-            systemctl status start lagatrix-api.service > /dev/null 2>&1
-
-            echo -e "\e[32mInstalation complete\e[0m"
+            systemctl start lagatrix-api.service > /dev/null 2>&1
         else
             error_msg "The files needed to install Lagatrix API could not be found"
         fi
